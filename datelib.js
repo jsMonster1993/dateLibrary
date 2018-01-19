@@ -19,9 +19,14 @@ class DateFormat {
     };
 
     format(pattern) {
+        pattern = (pattern.indexOf("h") > -1) ?
+            pattern.replace(new Array(pattern.match(/h/g).length + 1).join('h'), this.hours.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})) : pattern;
+        pattern = (pattern.indexOf("m") > -1) ?
+            pattern.replace(new Array(pattern.match(/m/g).length + 1).join('m'), this.minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})) : pattern;
+        pattern = (pattern.indexOf("s") > -1) ?
+            pattern.replace(new Array(pattern.match(/s/g).length + 1).join('s'), this.seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})) : pattern;        
         pattern = (pattern.indexOf("yy") > -1) ?
-            pattern.replace(new Array(pattern.match(/y/g).length + 1).join('y'), this.year.substring(0, pattern.match(/y/g).length)) :
-            pattern;
+            pattern.replace(new Array(pattern.match(/y/g).length + 1).join('y'), (pattern.match(/y/g).length > 2 )?this.year : this.year.substring(2, this.year.length)) : pattern;
         pattern = (pattern.indexOf("d") > -1) ?
             pattern.replace(new Array(pattern.match(/d/g).length + 1).join('d'), this.dd.substring(0, pattern.match(/d/g).length)) :
             pattern;
